@@ -3,3 +3,5 @@ openai
 markdownify
 markdown
 PyYAML
+Pygments
+mistune
