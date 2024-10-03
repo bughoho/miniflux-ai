@@ -5,8 +5,6 @@ import traceback
 import xml.etree.ElementTree as ET
 import xml.sax.saxutils as saxutils
 
-import html2text
-
 import miniflux
 from markdownify import markdownify as md
 import markdown
@@ -300,7 +298,6 @@ class CustomRenderer(MarkdownRenderer):
         return super().text(newtoken, state)
 
 def process_md_content(agent,html_content):
-    #md_content = html2text.html2text(html_content)
     md_content = md(html_content,keep_inline_images_in=['a'])
     parser = mistune.Markdown(renderer=CustomRenderer(agent),plugins=[table,task_lists])
     result,_ = parser.parse(md_content)
@@ -313,23 +310,6 @@ def process_entry(entry):
     [start_with_list.append('<pre') for i in style_block if i]
 
     for agent in config['agents'].items():
-        # # 打开文件并读取内容
-        # with open("output.txt", "r", encoding="utf-8") as file:
-        #     # 读取文件内容
-        #     text = file.read()
-        # with open("md.txt", "w", encoding="utf-8") as file:
-        #             # 写入字符串到文件
-        #             file.write(md(text))
-        # output = process_md_content(agent,md(text))
-        # with open("new.txt", "w", encoding="utf-8") as file:
-        #             # 写入字符串到文件
-        #             file.write(output)
-                    
-        
-        # with open("newhtml.html", "w", encoding="utf-8") as file:
-        #             # 写入字符串到文件
-        #             file.write(markdown.markdown(output,extensions=extensions))
-
         # Todo Compatible with whitelist/blacklist parameter, to be removed
         allow_list = agent[1].get('allow_list') if agent[1].get('allow_list') is not None else agent[1].get('whitelist')
         deny_list = agent[1]['deny_list'] if agent[1].get('deny_list') is not None else agent[1].get('blacklist')
@@ -338,12 +318,7 @@ def process_entry(entry):
             {"role": "system", "content": agent[1]['title_prompt']},
             {"role": "user", "content": entry['title']}
         ]
-        # messages = [
-        #     {"role": "system", "content": agent[1]['prompt']},
-        #     {"role": "user", "content": md(entry['content']) }
-        # ]
-        # filter, if AI is not generating, and in allow_list, or not in deny_list
-        # if (entry['title'] == 'tw93/Pake' and
+        
         if ((not entry['content'].startswith(tuple(start_with_list))) and
                 (((allow_list is not None) and (entry['feed']['feed_url'] in allow_list)) or
                  (deny_list is not None and entry['feed']['feed_url'] not in deny_list) or
@@ -371,9 +346,6 @@ def process_entry(entry):
     if len(llm_result) > 0:
         original_html = '<details>\n<summary>原文内容</summary>\n\n' + entry['content'] + '\n\n</details>\n\n'
         miniflux_client.update_entry(entry['id'], title=response_title_content, content= llm_result + original_html)
-
-# htmltable = markdown.markdown(md_table,extensions=[TableExtension()])
-# print(htmltable)
 
 signal.signal(signal.SIGTERM, signal_handler)
 while True:

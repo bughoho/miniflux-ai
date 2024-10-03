@@ -46,9 +46,6 @@ agents:
       #注意
       1.其中的id是文本的唯一标识，每个翻译结果都必须保证id正确。
       2.当要翻译的内容中含有html转义符时，翻译的结果要保持原来的html转义符。
-
-      #对翻译后的内容中的转义字符进行编码
-        请将"&"替换为"&amp;",将">"替换为"&gt;",将"<"替换为"&lt;"
     heading_prompt: |-
       # 角色描述
       您是一位在科技和编程领域具有高度技能的翻译专家，现在我将提供一段结构化的文本列表给你，请将文本准确翻译为中文，
@@ -77,7 +74,3 @@ agents:
     deny_list:
     allow_list:
       - https://parsec.app/changelog.xml
-      - https://mshibanami.github.io/GitHubTrendingRSS/weekly/all.xml
-      - https://github.com/jellyfin/jellyfin/releases.atom
-      - https://www.artificial-intelligence.blog/ai-news?format=rss
-      - https://hashnode.com/n/flutter/rss
