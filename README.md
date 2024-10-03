@@ -1,4 +1,11 @@
 # miniflux-ai
+
+This project is a deep modification of[Qetesh/miniflux-ai](https://github.com/Qetesh/miniflux-ai),
+
+主要修改如下:
+1.The text paragraphs have been split into a list of texts, preserving the original HTML tags of the article to enhance readability.
+2.The text is fed to the AI in segments to avoid issues with some lower-level AIs that cannot translate longer articles.
+
 Miniflux with AI
 
 <picture>
@@ -34,35 +41,51 @@ The repository includes a template configuration file: `config.sample.yml`. Modi
 Example `config.yml`:
 ```yaml
 # INFO、DEBUG、WARN、ERROR
+# INFO、DEBUG、WARN、ERROR
 log_level: "INFO"
 
 miniflux:
-  base_url: https://your.server.com
-  api_key: Miniflux API key here
+  base_url: http://192.168.1.225:183
+  api_key: 
 
 llm:
-  base_url: http://host.docker.internal:11434/v1
-  api_key: ollama
-  model: llama3.1:latest
-#  timeout: 60
-#  max_workers: 4
+  base_url: https://open.bigmodel.cn/api/paas/v4/
+  api_key: 
+  model: glm-4-flash
+  temperature: 0.3
+  max_workers: 1
 
 agents:
-  summary:
-    title: "💡AI 摘要"
-    prompt: "Please summarize the content of the article under 50 words in Chinese. Do not add any additional Character、markdown language to the result text. 请用不超过50个汉字概括文章内容。结果文本中不要添加任何额外的字符、Markdown语言。"
-    style_block: true
-    deny_list:
-      - https://xxxx.net
-    allow_list:
-
   translate:
-    title: "🌐AI 翻译"
-    prompt: "You are a highly skilled translation engine with expertise in the news media sector. Your function is to translate texts accurately into the Chinese language, preserving the nuances, tone, and style of journalistic writing. Do not add any explanations or annotations to the translated text."
+    title: "AI 翻译"
+    title_prompt: "翻译标题为中文，保留原语言的细微差别、语气和风格，不要添加任何解释或注释，标题中如果含有名称不要翻译。"
+    collection_prompt: |-
+      # 角色描述
+      您是一位在科技和编程领域具有高度技能的多语言(支持英语、法语、俄语、西班牙语、葡萄牙语 等等)翻译专家，现在我将提供一段结构化的文本列表给你，请将文本准确翻译为中文，
+      
+      # 问题格式
+      问题格式是一段xml结构文本：
+      <root>
+        <content id=1>this is a english text 1</content>
+        <content id=2>this is a english text 2</content>
+        <content id=3>this is a english text 3</content>
+      </root>
+      # 翻译格式
+      翻译后的格式必须是xml结构，格式如下：
+      <root>
+        <content id=1>这是一段英文文本1</content>
+        <content id=2>这是一段英文文本1</content>
+        <content id=3>这是一段英文文本3</content>
+      </root>
+
+      #注意
+      1.其中的id是文本的唯一标识，每个翻译结果都必须保证id正确。
+      2.当要翻译的内容中含有html转义符时，翻译的结果要保持原来的html转义符。
+      
     style_block: false
     deny_list:
     allow_list:
-      - https://www.xxx.com/
+      - https://parsec.app/changelog.xml
 ```
 
 ## Docker Setup
@@ -74,7 +97,7 @@ version: '3.3'
 services:
     miniflux_ai:
         container_name: miniflux_ai
-        image: ghcr.io/qetesh/miniflux-ai:latest
+        image: onesbug/miniflux-ai:latest
         restart: always
         environment:
             TZ: Asia/Shanghai
