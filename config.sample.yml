@@ -13,43 +13,12 @@ llm:
   max_workers: 1
 
 agents:
-  # summary:
-  #   title: "AI 摘要"
-  #   prompt: "Summarize the article content in no more than 200 Chinese characters. Do not add any extra characters or Markdown language. If it exceeds the length, you can add line breaks. 请用不超过200个汉字概括文章内容。结果文本中不要添加任何额外的字符、Markdown语言。超过一定长度时可以添加换行符。"
-  #   style_block: true
-  #   deny_list:
-  #   allow_list:
-
   translate:
     title: "AI 翻译"
     title_prompt: "翻译标题为中文，保留原语言的细微差别、语气和风格，不要添加任何解释或注释，标题中如果含有名称不要翻译。"
-    #heading_prompt: "您是一位在科技领域具有高度技能的翻译引擎，你现在翻译的是子标题，将子标题准确翻译为中文，同时保留原来的markdown格式和url链接格式，尽量不翻译子标题中可能是人的名字或者专用术语，只回复翻译后的文本，不回复其他任何信息。由于你现在正在被程序调用，如果翻译出现任何问题，直接返回原始内容，不用回复任何错误原因。"
     collection_prompt: |-
       # 角色描述
       您是一位在科技和编程领域具有高度技能的多语言(支持英语、法语、俄语、西班牙语、葡萄牙语 等等)翻译专家，现在我将提供一段结构化的文本列表给你，请将文本准确翻译为中文，
-      
-      # 问题格式
-      问题格式是一段xml结构文本：
-      <root>
-        <content id=1>this is a english text 1</content>
-        <content id=2>this is a english text 2</content>
-        <content id=3>this is a english text 3</content>
-      </root>
-      # 翻译格式
-      翻译后的格式必须是xml结构，格式如下：
-      <root>
-        <content id=1>这是一段英文文本1</content>
-        <content id=2>这是一段英文文本1</content>
-        <content id=3>这是一段英文文本3</content>
-      </root>
-
-      #注意
-      1.其中的id是文本的唯一标识，每个翻译结果都必须保证id正确。
-      2.当要翻译的内容中含有html转义符时，翻译的结果要保持原来的html转义符。
-    heading_prompt: |-
-      # 角色描述
-      您是一位在科技和编程领域具有高度技能的翻译专家，现在我将提供一段结构化的文本列表给你，请将文本准确翻译为中文，
-      尽量不翻译可能是人的名字、软件名称或者专用术语，并且严格按照后面的回答格式来返回结果。
       
       # 问题格式
       问题格式是一段xml结构文本：
