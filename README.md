@@ -1,6 +1,6 @@
 # miniflux-ai
 
-This project is a deep modification of[Qetesh/miniflux-ai](https://github.com/Qetesh/miniflux-ai),
+This project is a deep modification of [Qetesh/miniflux-ai](https://github.com/Qetesh/miniflux-ai),
 
 The main modifications are as follows:
 

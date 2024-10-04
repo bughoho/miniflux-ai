@@ -1,8 +1,11 @@
 name: miniflux_ai docker image
 
 on:
-  release:
-    types: [ published ]
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 
 jobs:
   build-and-push:
@@ -16,9 +19,6 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
