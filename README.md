@@ -43,7 +43,6 @@ The repository includes a template configuration file: `config.sample.yml`. Modi
 Example `config.yml`:
 ```yaml
 # INFO、DEBUG、WARN、ERROR
-# INFO、DEBUG、WARN、ERROR
 log_level: "INFO"
 
 miniflux:
@@ -99,7 +98,7 @@ version: '3.3'
 services:
     miniflux_ai:
         container_name: miniflux_ai
-        image: onesbug/miniflux-ai:latest
+        image: ghcr.io/bughoho/miniflux-ai:main
         restart: always
         environment:
             TZ: Asia/Shanghai

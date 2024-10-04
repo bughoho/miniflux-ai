@@ -4,7 +4,7 @@ services:
         container_name: miniflux_ai
         #original image
         #image: ghcr.io/qetesh/miniflux-ai:latest
-        image: onesbug/miniflux-ai:latest
+        image: ghcr.io/bughoho/miniflux-ai:main
         #build:
         #  context: .
         #  dockerfile: Dockerfile
