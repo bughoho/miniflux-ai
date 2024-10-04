@@ -2,11 +2,13 @@
 
 This project is a deep modification of[Qetesh/miniflux-ai](https://github.com/Qetesh/miniflux-ai),
 
-主要修改如下:
-1.The text paragraphs have been split into a list of texts, preserving the original HTML tags of the article to enhance readability.
-2.The text is fed to the AI in segments to avoid issues with some lower-level AIs that cannot translate longer articles.
+The main modifications are as follows:
 
-Miniflux with AI
+- 1.The text paragraphs have been split into a list of texts, preserving the original HTML tags of the article to enhance readability.
+
+- 2.The text is fed to the AI in segments to avoid issues with some lower-level AIs that cannot translate longer articles.
+
+## Miniflux with AI
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/472306c8-cdd2-4325-8655-04ba7e6045e5">
